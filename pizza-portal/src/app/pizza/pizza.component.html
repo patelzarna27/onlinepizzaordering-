@@ -1,0 +1,91 @@
+<div class="container">
+  <!--<table datatable class="table row-border hover" *ngIf="this.temp">
+  <button class="btn btn-primary" (click)="open(content)">Add</button>
+  <table datatable class="table row-border hover">-->
+
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Create Pizza</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="pizzaForm" (ngSubmit)="onSubmit()">
+        <!-- <div class="form-group">
+           <label for="id">Id</label>
+           <input type="text" formControlName="id" class="form-control" />
+         </div>-->
+        <div class="form-group">
+
+          <label for="pizza_Type">Pizza Type</label>
+          <select class="form-control" formControlName="pizza_Type" [ngClass]="{'in-invalid': submitted && f.pizza_Type.errors}" >
+            <option value="Brooklyn Style">Brooklyn Style</option>
+            <option value="Hand Tossed">Hand Tossed</option>
+            <option value="Crunchy Thin Crust">Crunchy Thin Crust</option>
+          </select>
+          <!--<input type="text" formControlName="pizza_Type" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.pizza_Type.errors }" /> -->
+          <div *ngIf="submitted && f.pizza_Type.errors" class="invalid-feedback">
+            <div *ngIf="f.pizza_Type.errors.required">Pizza type is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="pizza_Size">Pizza Size</label>
+          <select class="form-control" formControlName="pizza_Size" [ngClass]="{'in-invalid': submitted && f.pizza_Size.errors}" >
+            <option value="Small">Small</option>
+            <option value="Medium">Medium</option>
+            <option value="Large">Large</option>
+            <option value="X-Large">X-Large</option>
+          </select>
+          <!--<input type="text" formControlName="pizza_Size" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.pizza_Size.errors }" /> -->
+          <div *ngIf="submitted && f.pizza_Size.errors" class="invalid-feedback">
+            <div *ngIf="f.pizza_Size.errors.required">Pizza size is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="pizza_Price">Pizza Price</label>
+          <input type="text" formControlName="pizza_Price" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.pizza_Price.errors }" />
+          <div *ngIf="submitted && f.pizza_Price.errors" class="invalid-feedback">
+            <div *ngIf="f.pizza_Price.errors.required">Pizza price is required</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+    <!-- <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div> -->
+  </ng-template>
+
+  <table class="table table-sm">
+    <thead>
+    <tr>
+      <th class="align-middle">Id</th>
+      <th class="align-middle">Type</th>
+      <th class="align-middle">Size</th>
+      <th class="align-middle">Price</th>
+      <th>  <button class="btn btn-primary btn-sm btn-block" (click)="open(content)">Add</button></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let emp of this.pizzaData">
+      <td><span class="input-group-text">{{emp.id}}</span></td>
+      <td><input type="text" class="form-control" [(ngModel)]="emp.pizza_Type" [disabled]="!emp.isEditable" /></td>
+      <td><input type="text" class="form-control" [(ngModel)]="emp.pizza_Size" [disabled]="!emp.isEditable" /></td>
+      <td><input type="text" class="form-control" [(ngModel)]="emp.pizza_Price" [disabled]="!emp.isEditable"/></td>
+      <td><div>
+        <button class="btn btn-outline-warning " *ngIf="!emp.isEditable" (click)="emp.isEditable=!emp.isEditable">Edit</button>
+        <button class="btn btn-outline-warning " *ngIf="emp.isEditable" (click)="editPizza(emp)">Save</button>
+        <button class="btn btn-outline-danger" (click)="deletePizza(emp)">Delete</button>
+
+      </div></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+

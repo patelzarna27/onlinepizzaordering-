@@ -1,0 +1,67 @@
+<div class="container">
+  <h1>BUILD YOUR OWN</h1>
+  <div class="row">
+  <div class="col-md-8 order-md-1">
+  <ngb-accordion activeIds="step-1,step-2" class="">
+    <ngb-panel id="step-1">
+      <ng-template ngbPanelHeader let-opened="opened">
+        <h5>STEP 1 : SIZE AND CRUST</h5>
+      </ng-template>
+      <ng-template ngbPanelContent>
+        <div class="form-group">
+          <label>CHOOSE YOUR SIZE</label>
+          <select class="custom-select" >
+            <option *ngFor="let s of this.pSize">{{s}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>CHOOSE YOUR CRUST</label>
+          <select class="custom-select" >
+            <option *ngFor="let s of this.pSize">{{s}}</option>
+          </select>
+        </div>
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel id="step-2">
+      <ng-template ngbPanelHeader>
+        <h5>STEP 2 : TOPPINGS</h5>
+      </ng-template>
+      <ng-template ngbPanelContent let-opened="opened">
+        <div class="form-group">
+          <label>CHOOSE YOUR TOPPING</label>
+          <select class="custom-select">
+            <option *ngFor="let t of this.pSize">{{t}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>CHOOSE YOUR QUANTITY</label>
+          <select class="custom-select">
+            <option *ngFor="let t of this.pSize">{{t}}</option>
+          </select>
+        </div>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+</div>
+  <div class="col-md-4 order-md-2 mb-4">
+  <ngb-accordion activeIds="cart-1">
+    <ngb-panel id="cart-1">
+      <ng-template ngbPanelHeader>
+        <h5>MY PIZZA</h5>
+      </ng-template>
+      <ng-template ngbPanelContent let-opened="opened">
+        <div>
+          <label><span></span></label>
+          <select>
+            <option *ngFor="let n of this.pQuntity">{{n}}</option>
+          </select>
+          <button class="btn btn-primary btn-block">CHECKOUT</button>
+        </div>
+      </ng-template>
+
+    </ngb-panel>
+  </ngb-accordion>
+  </div>
+  </div>
+
+</div>
