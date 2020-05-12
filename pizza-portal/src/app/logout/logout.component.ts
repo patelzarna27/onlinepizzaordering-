@@ -16,8 +16,13 @@ export class LogoutComponent implements OnInit {
   }
 
   ngOnInit() {
+    const isemploggedin = this.authentocationService.isEmployeeLoggedIn();
     this.authentocationService.logOut();
-    this.router.navigate(['login']);
+    if(isemploggedin){
+      this.router.navigate(['emplogin']);
+    } else {
+      this.router.navigate(['login']);
+    }
   }
 
 }

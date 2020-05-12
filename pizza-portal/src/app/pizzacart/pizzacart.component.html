@@ -1,0 +1,70 @@
+<div class="container">
+  <div >
+    <h2>CART</h2>
+    <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo.</p> -->
+  </div>
+  <div class="alert alert-warning" role="alert" *ngIf="carts.length==0">
+    Your cart is empty
+  </div>
+  <div class="table" *ngIf="this.carts.length>0">
+
+  <table class="table table-striped">
+     <thead>
+         <tr>
+           <th>CONFIRM YOUR SELECTION</th>
+           <th>QUANTITY</th>
+           <th>PRICE</th>
+           <th class="text-right">TOTAL</th>
+         </tr>
+     </thead>
+    <tbody>
+       <tr *ngFor="let cart of this.carts">
+         <td class="">
+           <div>
+             <img src="/assets/images/S_PIZZA.jpg" height="40">
+           {{cart.item}}
+           </div>
+         </td>
+         <td><div>
+           <button  (click)="incQunatity(cart)" [disabled]="cart.itemQty==12"><fa-icon [icon]="faPlus"></fa-icon> </button>
+           &nbsp;<b>{{cart.itemQty}}</b>&nbsp;
+           <button (click)="redQuntity(cart)" [disabled]="cart.itemQty==1"><fa-icon [icon]="faMinus" ></fa-icon></button>
+           &nbsp; <button (click)="onDelete(cart)"> <fa-icon [icon]="faTrash"></fa-icon></button>
+           </div>
+         </td>
+
+         <td>{{cart.itemPrice}}</td>
+         <td class="text-right">${{cart.itemQty * cart.itemPrice}}</td>
+       </tr>
+
+    </tbody>
+    <tfoot>
+    <tr>
+      <td></td>
+      <td></td>
+      <td>Taxes: </td>
+      <td class="text-right">${{this.getTax()}}</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td>Total: </td>
+      <td class="text-right">${{this.totalCost()}}</td>
+    </tr>
+
+    </tfoot>
+  </table>
+    <div class="-align-right">
+      <button class="btn btn-warning" (click)="router.navigate(['/home'])">ADD MORE ITEMS</button>
+      &nbsp;
+      <button (click)="onCheckout()" class="btn btn-danger">CONTINUE CHECKOUT</button>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+

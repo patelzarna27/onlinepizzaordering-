@@ -13,4 +13,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "SELECT * FROM topping where is_delete = 0", nativeQuery = true)
     List<Pizza> findActivePizza();
+
 }

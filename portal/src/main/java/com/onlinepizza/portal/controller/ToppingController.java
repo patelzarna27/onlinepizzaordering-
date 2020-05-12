@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -23,6 +24,30 @@ public class ToppingController {
     public Topping createTopping(@Valid @RequestBody Topping topping) {
         // user.setId(Helper.generateId(user.getUserId()));
         return ToppingRepository.save(topping);
+    }
+
+    @GetMapping("/topping/quantity/{toppingName}")
+    public List<String> getQuantity(@PathVariable(value="toppingName") String toppingName){
+        List<String> quantity = new ArrayList<String>();
+        for(Topping myTopping: ToppingRepository.findAll()){
+            if(myTopping.getTopping_Name().equalsIgnoreCase(toppingName)){
+                if(quantity.contains(myTopping.getTopping_Quantity())!=true) {
+                    quantity.add(myTopping.getTopping_Quantity());
+                }
+            }
+        }
+        return quantity;
+    }
+
+    @GetMapping("/topping/price/{name}&{quantity}")
+    public String getToppingPrice(@PathVariable(value = "name") String toppingName, @PathVariable(value = "quantity") String topQnty){
+      for(Topping myTopping : ToppingRepository.findAll()){
+          if(myTopping.getTopping_Name().equalsIgnoreCase(toppingName) &&
+                  myTopping.getTopping_Quantity().equalsIgnoreCase(topQnty)) {
+              return myTopping.getTopping_Price();
+          }
+      }
+      return "0";
     }
 
 

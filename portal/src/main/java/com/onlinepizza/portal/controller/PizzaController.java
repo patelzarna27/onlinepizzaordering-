@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.sql.ClientInfoStatus;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +26,35 @@ public class PizzaController {
     public List<Pizza> getAllpizza() {
         //return pizzaRepository.findActivePizza(false);
         return pizzaRepository.findActivePizza();
+    }
+
+    @GetMapping("pizza/size")
+    public List<String> getPizzaSize() {
+        return pizzaRepository.getSize();
+    }
+
+    @GetMapping("pizza/price/{size}&{type}")
+    public String getPrice(@PathVariable(value = "size") String size, @PathVariable String type) {
+        for(Pizza myPizza: pizzaRepository.findActivePizza()){
+            if(myPizza.getPizza_Size().equalsIgnoreCase(size) && myPizza.getPizza_Type().equalsIgnoreCase(type)) {
+                return myPizza.getPizza_Price();
+            }
+        }
+        return "0";
+    }
+
+    @GetMapping("pizza/types/{size}")
+    public List<String> getType(@PathVariable(value="size") String size){
+       //return pizzaRepository.getPizzaTypes(size);
+        List<String> pTypes = new ArrayList<String>();
+        for (Pizza myPizza: pizzaRepository.findActivePizza()) {
+            if(myPizza.getPizza_Size().equalsIgnoreCase(size)){
+                if(pTypes.contains(myPizza.getPizza_Type())!= true){
+                    pTypes.add(myPizza.getPizza_Type());
+                }
+            }
+        }
+        return pTypes;
     }
 
     @PostMapping("/pizza/save")

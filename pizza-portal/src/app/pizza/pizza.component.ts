@@ -69,9 +69,9 @@ export class PizzaComponent implements OnInit {
   editPizza(editData: Pizza) {
     this.pizzaService.updatePizza(editData).subscribe(res => {
       if (res === true) {
-        alert('success');
+        console.log('success');
       } else {
-        alert('failure');
+        console.log('failure');
       }
     });
     editData.isEditable = false;

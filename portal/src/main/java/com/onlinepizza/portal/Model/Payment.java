@@ -57,7 +57,6 @@ public class Payment {
     @Column(name = "creditcard_no", nullable = false)
     private String creditcard_No;
 
-
     public String getPayment_Id() {
         return payment_Id;
     }

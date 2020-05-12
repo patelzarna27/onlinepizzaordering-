@@ -1,0 +1,72 @@
+<section class="payment-form dark">
+  <div class="container">
+    <div class="text-center">
+      <h2>CHECKOUT</h2>
+      <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo.</p> -->
+    </div>
+    <form [formGroup]="paymentform" (ngSubmit)="onClick()">
+      <div class="products">
+        <h3 class="title">ORDER SUMMARY</h3>
+
+        <div class="item" *ngFor="let cart of this.carts">
+          <span class="price">{{cart.itemPrice * cart.itemQty}}</span>
+          <p class="item-name">{{cart.item}}</p>
+          <!--<p class="item-description">Lorem ipsum dolor sit amet</p> -->
+        </div>
+       <!-- <div class="item">
+          <span class="price">$120</span>
+          <p class="item-name">Product 2</p>
+          <p class="item-description">Lorem ipsum dolor sit amet</p>
+        </div>!-->
+        <div class="total">Tax<span class="price">{{this.getTax()}}</span></div>
+        <div class="total">Total<span class="price">{{this.totalCost()}}</span></div>
+      </div>
+
+      <div class="card-details">
+        <h3 class="title">Credit Card Details</h3>
+        <div class="row">
+          <div class="form-group col-sm-7">
+            <label for="cardholder">Card Holder</label>
+            <input id="card-holder" formControlName="cardholder" type="text" class="form-control" placeholder="Card Holder" aria-label="Card Holder" aria-describedby="basic-addon1"
+                   [ngClass]="{ 'is-invalid': submitted && f.cardholder.errors }" />
+            <div *ngIf="submitted && f.cardholder.errors" class="invalid-feedback">
+              <div *ngIf="f.cardholder.errors.required">Card holder name is required</div>
+            </div>
+          </div>
+
+          <div class="form-group col-sm-5">
+            <label for="expirationdate">Expiration Date</label>
+              <input type="text" class="form-control" formControlName="expirationdate" placeholder="MMYY" aria-label="MMYY" aria-describedby="basic-addon1"
+                     [ngClass]="{'is-invalid':submitted && f.expirationdate.errors}" />
+              <div *ngIf="submitted && f.expirationdate.errors" class="invalid-feedback">
+                <div *ngIf="f.expirationdate.errors.required">Expiration date is required</div>
+              </div>
+          </div>
+          <div class="form-group col-sm-8">
+            <label for="cardnumber">Card Number</label>
+            <input id="card-number" formControlName="cardnumber" type="text" class="form-control" placeholder="Card Number" aria-label="Card Holder" aria-describedby="basic-addon1"
+                   [ngClass]="{'is-invalid':submitted && f.cardnumber.errors}"/>
+            <div *ngIf="submitted && f.cardnumber.errors" class="invalid-feedback">
+              <div *ngIf="f.cardnumber.errors.required">Card number is required</div>
+              <div *ngIf="f.cardnumber.errors.minlength">Card number must be 16 digit</div>
+              <div *ngIf="f.cardnumber.errors.maxlength">Card number must be 16 digit</div>
+              <div *ngIf="f.cardnumber.errors.pattern">Card number must be 16 digit</div>
+
+            </div>
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="cvc">CVC</label>
+            <input id="cvc" formControlName="cvc" type="text" class="form-control" placeholder="CVC" aria-label="Card Holder" aria-describedby="basic-addon1"
+                   [ngClass]="{'is-invalid':submitted && f.cvc.errors}"/>
+            <div *ngIf="submitted && f.cvc.errors" class="invalid-feedback">
+              <div *ngIf="f.cvc.errors.required">CVC is required</div>
+            </div>
+          </div>
+          <div class="form-group col-sm-12">
+            <button class="btn btn-primary btn-block">PLACE YOUR ORDER</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

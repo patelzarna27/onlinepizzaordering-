@@ -1,5 +1,7 @@
 <div class="container">
-  <h1>BUILD YOUR OWN</h1>
+  <div>
+    <h2>BUILD YOUR OWN</h2>
+  </div>
   <div class="row">
   <div class="col-md-8 order-md-1">
   <ngb-accordion activeIds="step-1,step-2" class="">
@@ -10,14 +12,16 @@
       <ng-template ngbPanelContent>
         <div class="form-group">
           <label>CHOOSE YOUR SIZE</label>
-          <select class="custom-select" >
+          <select class="custom-select" [(ngModel)]='this.sizeSelect'  (change)="OnSizeSelect()" >
+            <option value=''>{{"Select pizza size"}}</option>
             <option *ngFor="let s of this.pSize">{{s}}</option>
           </select>
         </div>
         <div class="form-group">
           <label>CHOOSE YOUR CRUST</label>
-          <select class="custom-select" >
-            <option *ngFor="let s of this.pSize">{{s}}</option>
+          <select class="custom-select" [(ngModel)]="this.typeSelect">
+            <option value=''>{{"Select pizza crust type"}}</option>
+            <option *ngFor="let s of this.pType" >{{s}}</option>
           </select>
         </div>
       </ng-template>
@@ -29,14 +33,16 @@
       <ng-template ngbPanelContent let-opened="opened">
         <div class="form-group">
           <label>CHOOSE YOUR TOPPING</label>
-          <select class="custom-select">
-            <option *ngFor="let t of this.pSize">{{t}}</option>
+          <select class="custom-select" [(ngModel)]="this.topSelect" (change)="OnToppingSelect()">
+            <option value=''>{{"Select topping"}}</option>
+            <option *ngFor="let t of this.toppingData">{{t.topping_Name}}</option>
           </select>
         </div>
         <div class="form-group">
           <label>CHOOSE YOUR QUANTITY</label>
-          <select class="custom-select">
-            <option *ngFor="let t of this.pSize">{{t}}</option>
+          <select class="custom-select" [(ngModel)]="quantitySelect">
+            <option value=''>{{"Select quantity"}}</option>
+            <option *ngFor="let t of this.pTopQunatity">{{t}}</option>
           </select>
         </div>
       </ng-template>
@@ -50,12 +56,15 @@
         <h5>MY PIZZA</h5>
       </ng-template>
       <ng-template ngbPanelContent let-opened="opened">
-        <div>
-          <label><span></span></label>
-          <select>
+        <div class="form-group">
+          <label><h6>{{this.sizeSelect}} {{this.typeSelect}} {{this.topSelect}}</h6></label>
+          <select class="custom-select" [(ngModel)]="this.itemQnty">
             <option *ngFor="let n of this.pQuntity">{{n}}</option>
           </select>
-          <button class="btn btn-primary btn-block">CHECKOUT</button>
+          <br/>
+          <br/>
+
+          <button class="btn btn-primary btn-block" (click)="OnAddToOrder()" >ADD TO ORDER</button>
         </div>
       </ng-template>
 

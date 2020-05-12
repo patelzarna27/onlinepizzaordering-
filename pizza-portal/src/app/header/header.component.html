@@ -1,16 +1,23 @@
 <header>
-  <nav class ="navbar navbar-light bg-light">
-    <a routerLink="/" class="navbar-brand">Online Pizza Order</a>
+  <div class="container">
+  <nav class ="navbar navbar-light">
+    <a routerLink="/" class="navbar-brand"> <i><h5>Online Pizza Order</h5></i></a>
 
     <ul class="nav nav-pills">
-      <li class="nav-item"><a *ngIf="loginService.isUserLoggedIn()" routerLink="/home" class="nav-link">Home</a></li>
-      <li class="nav-item"><a *ngIf="loginService.isUserLoggedIn()"  class="nav-link" routerLink="/pizza" >Add/Edit Pizza</a> </li>
-      <li class="nav-item"><a *ngIf="loginService.isUserLoggedIn()"  class="nav-link" routerLink="/topping">Add/Edit Topping</a> </li>
-      <!--<li class="nav-item"><a *ngIf="loginService.isUserLoggedIn()" routerLink="/employees" class="nav-link">View Employees</a></li>-->
-      <!-- <li><a *ngIf="loginService.isUserLoggedIn()" routerLink="/employees" class="nav-link">Add New Employee</a></li> -->
-      <!-- <li class="nav-item"><a *ngIf="!loginService.isUserLoggedIn()" routerLink="/login" class="nav-link">Login</a></li> -->
-      <li class="nav-item"><a *ngIf="loginService.isUserLoggedIn()" routerLink="/logout" class="nav-link">LogOut</a></li>
+      <li class="nav-item"><a *ngIf="loginService.isUserLoggedIn() && !loginService.isEmployeeLoggedIn()" routerLink="/home" class="nav-link"><fa-icon [icon]="faHome"></fa-icon> Home</a></li>
+
+      <li class="nav-item"><a *ngIf="loginService.isEmployeeLoggedIn()"  class="nav-link" routerLink="/pizza" ><fa-icon [icon]="faPizzaSlice"></fa-icon>Add/Edit Pizza </a> </li>
+      <li class="nav-item"><a *ngIf="loginService.isEmployeeLoggedIn()"  class="nav-link" routerLink="/topping"><fa-icon [icon]="faKaaba"></fa-icon>Add/Edit Topping</a> </li>
+      <li class="nav-item"><a *ngIf="loginService.isUserLoggedIn() || loginService.isEmployeeLoggedIn()" routerLink="/orders" class="nav-link"><fa-icon [icon]="faCoins"></fa-icon>Orders</a></li>
+      <li class="nav-item" *ngIf="loginService.isUserLoggedIn() && !loginService.isEmployeeLoggedIn()"><a routerLink="/cart"  class="nav-link"><fa-icon [icon]="faShoppingCart"></fa-icon>Cart <b>{{httpService.getTotalCartItems()}} </b> </a></li>
+      <li class="nav-item"><a *ngIf="loginService.isUserLoggedIn() || loginService.isEmployeeLoggedIn()" routerLink="/profile" class="nav-link"><fa-icon [icon]="faUser"></fa-icon> {{loginService.getUserName()}}</a></li>
+
+      <li class="nav-item"><a *ngIf="loginService.isUserLoggedIn() || loginService.isEmployeeLoggedIn()" routerLink="/logout" class="nav-link">
+        <fa-icon [icon]="faSignOutAlt"></fa-icon>Logout</a></li>
+
+
+
     </ul>
   </nav>
-
+  </div>
 </header>

@@ -1,0 +1,84 @@
+<div class="container">
+  <div>
+    <h2>ORDERS</h2>
+  </div>
+  <!--<div class="alert alert-warning" role="alert" *ngIf="this.authSerice.isEmployeeLoggedIn() && this.orderCart.length == 0">
+    No order has been placed
+  </div>-->
+  <div class="table">
+
+    <table class="table table-sm">
+      <thead>
+      <tr>
+        <th>Order NO</th>
+        <th>Order detail</th>
+        <th>Order Status</th>
+        <th>Order Created</th>
+        <th>Review</th>
+      </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let odr of this.orders">
+            <td>{{odr.order_id}}</td>
+            <td>
+              <div class="form-inline">
+                <img src="/assets/images/S_PIZZA.jpg" height="30">
+                <ul>
+                <li *ngFor="let cart of this.getOrderCart(odr)">
+                  {{cart}}
+                </li>
+              </ul>
+              </div>
+            </td>
+
+            <td>
+              <div class="form-inline">
+                <label [hidden]="odr.isEditable">{{odr.order_status}}</label>
+                <!-- <input type="text" class="form-control" [(ngModel)]="odr.order_status" [disabled]="!odr.isEditable" [hidden]="odr.isEditable" /> -->
+                <select class="custom-select form-control" (ngModelChange)="onSelect($event,odr)" [ngModel]="odr.order_status"  [hidden]="!odr.isEditable && this.authSerice.isUserLoggedIn()">
+                  <option value="Accepted">Accepted</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Cancel">Cancel</option>
+                </select>
+                <button class="btn form-control " *ngIf="!odr.isEditable" (click)="odr.isEditable=!odr.isEditable" [hidden]="!this.authSerice.isEmployeeLoggedIn()"><fa-icon [icon]="faEdit"></fa-icon> </button>
+                <button class="btn form-control" *ngIf="odr.isEditable" (click)="saveOrderStatus(odr)" [hidden]="!this.authSerice.isEmployeeLoggedIn()"><fa-icon [icon]="faSave"></fa-icon></button>
+              </div>
+            </td>
+
+            <td>{{odr.createdAt}}</td>
+            <td><div>
+                <span *ngFor="let rv of this.getOrderFeedback(odr)">
+                  {{rv}}
+                </span>
+              <button [hidden]="authSerice.isEmployeeLoggedIn()" class="btn btn-info" (click)="open(content,odr)"><fa-icon [icon]="faSmile"></fa-icon> </button>
+            </div>
+            </td>
+
+           </tr>
+      </tbody>
+    </table>
+
+    <ng-template #content let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Feedback</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="form-control" [(ngModel)]="feedback">
+      </div>
+      <div class="modal-footer">
+         <button type="button" class="btn btn-outline-dark" (click)="saveFeedback()">Save</button>
+      </div>
+    </ng-template>
+
+  </div>
+</div>
+
+
+
+
+
+

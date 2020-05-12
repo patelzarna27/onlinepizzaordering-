@@ -50,9 +50,15 @@ export class LoginComponent implements OnInit {
       .subscribe(
         data => {
           console.log(data);
-          if (data === true) {
-            sessionStorage.setItem('username', this.loginForm.get('userId').value.toString().trim());
-            this.router.navigate(['/home']);
+          if (data !== 0 ) {
+           // sessionStorage.setItem('employee', data.toString());
+            if (data !== 1) {
+              sessionStorage.setItem('username', this.loginForm.get('userId').value.toString().trim());
+              this.router.navigate(['/home']);
+            } else {
+              this.disaplayMessage('Invalid userid and password');
+            }
+
           } else {
             this.disaplayMessage('Invalid userid and password');
           }

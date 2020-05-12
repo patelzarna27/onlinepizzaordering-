@@ -21,9 +21,17 @@ public class cart {
     @Column(name = "created_at", nullable = false)
     private Date createdAt;
 
-    public Date getCreatedAt() {
-        return createdAt;
-    }
+    @Column(name="item", nullable = false)
+    private String item;
+
+    @Column(name="itemQty", nullable = false)
+    private String itemQty;
+
+    @Column(name="itemPrice", nullable = false)
+    private String itemPrice;
+
+    @Column(name = "order_Id", nullable = false)
+    private  String order_Id;
 
     public long getId() {
         return id;
@@ -37,57 +45,40 @@ public class cart {
         this.createdAt = createdAt;
     }
 
-    @Column(name = "cart_id", nullable = false)
-    private String cart_Id;
-    @Column(name = "pizza_quantity" , nullable = false)
-    private String pizza_Quantity;
-
-    @Column(name = "user_id" , nullable = false)
-    private String user_Id;
-
-    @Column(name = "topping_id", nullable = false)
-    private String topping_Id;
-
-    @Column(name = "pizza_id", nullable = false)
-    private String pizza_Id;
-
-    public String getCart_Id() {
-        return cart_Id;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCart_Id(String cart_Id) {
-        this.cart_Id = cart_Id;
+    public void setOrder_Id(String order_Id) {
+        this.order_Id = order_Id;
     }
 
-    public String getPizza_Quantity() {
-        return pizza_Quantity;
+    public String getOrder_Id() {
+        return order_Id;
     }
 
-    public void setPizza_Quantity(String pizza_Quantity) {
-        this.pizza_Quantity = pizza_Quantity;
+    public String getItem() {
+        return item;
     }
 
-    public String getPizza_Id() {
-        return pizza_Id;
+    public void setItem(String item) {
+        this.item = item;
     }
 
-    public void setPizza_Id(String pizza_Id) {
-        this.pizza_Id = pizza_Id;
+    public String getItemPrice() {
+        return itemPrice;
     }
 
-    public String getUser_Id() {
-        return user_Id;
+    public void setItemPrice(String itemPrice) {
+        this.itemPrice = itemPrice;
     }
 
-    public void setUser_Id(String user_Id) {
-        this.user_Id = user_Id;
+    public String getItemQty() {
+        return itemQty;
     }
 
-    public String getTopping_Id() {
-        return topping_Id;
+    public void setItemQty(String itemQty) {
+        this.itemQty = itemQty;
     }
 
-    public void setTopping_Id(String topping_Id) {
-        this.topping_Id = topping_Id;
-    }
 }

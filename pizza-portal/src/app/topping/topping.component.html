@@ -1,0 +1,84 @@
+
+<div class="container">
+  <!--<table datatable class="table row-border hover" *ngIf="this.temp">-->
+  <button class="btn btn-primary" (click)="open(content)">Add</button>
+  <!--<table datatable class="table row-border hover">-->
+
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add topping</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="toppingForm" (ngSubmit)="onSubmit()">
+
+        <div class="form-group">
+          <label for="topping_Name">Topping Name</label>
+          <input type="text" formControlName="topping_Name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.topping_Name.errors }" />
+          <div *ngIf="submitted && f.topping_Name.errors" class="invalid-feedback">
+            <div *ngIf="f.topping_Name.errors.required">Topping name is required</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="topping_Quantity">Topping Quantity</label>
+         <!-- <input type="text" formControlName="topping_Quantity" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.topping_Quantity.errors }" /> -->
+          <select class="form-control" formControlName="topping_Quantity" [ngClass]="{'in-invalid': submitted && f.topping_Quantity.errors}" >
+            <option value="Small">Light</option>
+            <option value="Medium">Normal</option>
+            <option value="Large">Extra</option>
+            <option value="X-Large">Double</option>
+          </select>
+          <div *ngIf="submitted && f.topping_Quantity.errors" class="invalid-feedback">
+            <div *ngIf="f.topping_Quantity.errors.required">Topping Quantity is required</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="topping_Price">Topping Price</label>
+          <input type="text" formControlName="topping_Price" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.topping_Price.errors }" />
+          <div *ngIf="submitted && f.topping_Price.errors" class="invalid-feedback">
+            <div *ngIf="f.topping_Price.errors.required">Topping Price is required</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+      <table class="table table-sm table-responsive">
+        <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Price</th>
+          <th>Edit/Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let emp of this.toppingData">
+          <td><span class="input-group-text">{{emp.id}}</span></td>
+          <td><input type="text" class="form-control" [(ngModel)]="emp.topping_Name" [disabled]="!emp.isEditable" /></td>
+          <td><input type="text" class="form-control" [(ngModel)]="emp.topping_Quantity" [disabled]="!emp.isEditable" /></td>
+          <td><input type="text" class="form-control" [(ngModel)]="emp.topping_Price" [disabled]="!emp.isEditable"/></td>
+          <td><div>
+            <button class="btn btn-outline-warning" *ngIf="!emp.isEditable" (click)="emp.isEditable =! emp.isEditable">Edit</button>
+            <button class="btn btn-outline-warning" *ngIf="emp.isEditable" (click)="editTopping(emp)">Save</button>
+            <button class="btn btn-outline-danger" (click)="deleteTopping(emp)">Delete</button>
+          </div></td>
+        </tr>
+        </tbody>
+      </table>
+
+
+    </div>
+
+

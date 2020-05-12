@@ -4,7 +4,6 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { DataTablesModule } from 'angular-datatables';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { EmployeeComponent } from './employee/employee.component';
 import { HttpClientModule} from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -15,13 +14,20 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { PizzaComponent } from './pizza/pizza.component';
 import { ToppingComponent } from './topping/topping.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { EmploginComponent } from './emplogin/emplogin.component';
+import { EmpsignupComponent } from './empsignup/empsignup.component';
+import { PizzacartComponent } from './pizzacart/pizzacart.component';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { OrdersummaryComponent } from './ordersummary/ordersummary.component';
+import { MyorderComponent } from './myorder/myorder.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    EmployeeComponent,
     LoginComponent,
     LogoutComponent,
     HeaderComponent,
@@ -29,7 +35,14 @@ import { ToppingComponent } from './topping/topping.component';
     HomeComponent,
     RegisterComponent,
     PizzaComponent,
-    ToppingComponent
+    ToppingComponent,
+    EmploginComponent,
+    EmpsignupComponent,
+    PizzacartComponent,
+    CheckoutComponent,
+    OrdersummaryComponent,
+    MyorderComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +51,8 @@ import { ToppingComponent } from './topping/topping.component';
     FormsModule,
     ReactiveFormsModule,
     DataTablesModule,
-    NgbModule
+    NgbModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

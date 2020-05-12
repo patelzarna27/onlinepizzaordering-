@@ -32,6 +32,15 @@
     </div>
   </div>
   <div class="form-group">
+    <label for="userConfirmPassword">Confirm Password</label>
+    <input type="password" formControlName="userConfirmPassword" class="form-control" [ngClass]="{'is-invalid': submitted && f.userConfirmPassword.errors }">
+
+    <div *ngIf="submitted && f.userConfirmPassword.errors" class="invalid-feedback">
+      <div *ngIf="f.userConfirmPassword.errors.required">Password is required</div>
+      <div *ngIf="f.userConfirmPassword.errors.MatchPassword">Confirm password does not match</div>
+    </div>
+  </div>
+  <div class="form-group">
     <label for="email">Email</label>
     <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
     <div *ngIf="submitted && f.email.errors" class="invalid-feedback">

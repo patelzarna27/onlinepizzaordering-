@@ -2,6 +2,7 @@ package com.onlinepizza.portal.Model;
 
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -34,47 +35,63 @@ public class Order {
     }
 
     @Column(name = "order_id", nullable = false)
-    private String order_Id;
-
-    @Column(name = "total_amount", nullable = false)
-    private String total_Amount;
-
-    @Column(name = "created", nullable = false)
-    private String Created;
+    private String order_id;
 
     @Column(name = "user_id", nullable = false)
-    private String user_Id;
+    private String user_id;
 
+    @Column(name = "order_total", nullable = false)
+    private  String order_total;
 
-    public String getOrder_Id() {
-        return order_Id;
+    @Column(name = "order_status", nullable = false)
+    private String order_status;
+
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "updated_at", nullable = true)
+    private Date updatedAt;
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
-    public void setOrder_Id(String order_Id) {
-        this.order_Id = order_Id;
+    public String getOrder_total() {
+        return order_total;
     }
 
-    public String getTotal_Amount() {
-        return total_Amount;
+    public void setOrder_total(String order_total) {
+        this.order_total = order_total;
     }
 
-    public void setTotal_Amount(String total_Amount) {
-        this.total_Amount = total_Amount;
+    public String getOrder_id() {
+        return order_id;
     }
 
-    public String getCreated() {
-        return Created;
+    public void setOrder_id(String order_id) {
+        this.order_id = order_id;
     }
 
-    public void setCreated(String created) {
-        Created = created;
+    public String getUser_id() {
+        return user_id;
     }
 
-    public String getUser_Id() {
-        return user_Id;
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
-    public void setUser_Id(String user_Id) {
-        this.user_Id = user_Id;
+    public String getOrder_status() {
+        return order_status;
+    }
+
+    public void setOrder_status(String order_status) {
+        if(order_status.isEmpty()){
+            order_status = "Received";
+        }
+        else {
+            this.order_status = order_status;
+        }
     }
 }

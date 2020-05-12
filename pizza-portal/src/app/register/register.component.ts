@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AuthenticationService } from '../service/authentication.service';
 import { HttpClientService } from '../service/http-client.service';
 
 @Component({ templateUrl: 'register.component.html' })
+
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   loading = false;
@@ -31,9 +32,10 @@ export class RegisterComponent implements OnInit {
       lastName: ['', Validators.required],
       userId: ['', Validators.required],
       userPassword: ['', [Validators.required, Validators.minLength(6)]],
+      userConfirmPassword: ['', Validators.required],
       email: ['', Validators.required],
       phoneNo: ['', Validators.required]
-    });
+    }, {validator : PasswordValidation.MatchPassword});
   }
 
   // convenience getter for easy access to form fields
@@ -58,5 +60,17 @@ export class RegisterComponent implements OnInit {
           this.error = error;
           this.loading = false;
         });
+  }
+}
+
+export class PasswordValidation {
+  static MatchPassword(AC: AbstractControl) {
+    const password = AC.get('userPassword').value;
+    const confirmpassword = AC.get('userConfirmPassword').value;
+    if (confirmpassword === password) {
+      return null;
+    } else {
+      AC.get('userConfirmPassword').setErrors({MatchPassword: true });
+    }
   }
 }

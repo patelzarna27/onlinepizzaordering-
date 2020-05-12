@@ -37,19 +37,25 @@ public class UserController {
      * @throws ResourceNotFoundException the resource not found exception
      */
     @GetMapping("/users/{id}")
-    public ResponseEntity<User> getUsersById(@PathVariable(value = "id") Long userId)
+    public User getUsersById(@PathVariable(value = "id") String userId)
             throws ResourceNotFoundException {
-        User user =
-                userRepository
-                        .findById(userId)
-                        .orElseThrow(() -> new ResourceNotFoundException("User not found on :: " + userId));
-        return ResponseEntity.ok().body(user);
+        User user = null;
+        try {
+            for (User myUser: userRepository.findAll()) {
+                if(myUser.getUserId().equalsIgnoreCase(userId.trim())){
+                 user = myUser;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 
     @PostMapping("/users/validate")
-    public  boolean validateUser(@Valid @RequestBody User user)
+    public  int validateUser(@Valid @RequestBody User user)
     {
-        boolean bResult = false;
+        int bResult = 0;
         /*if(user.getUserId().equalsIgnoreCase("java") == true) {
             if (user.getUserPassword().equalsIgnoreCase("password") == true)
                 bResult = true;
@@ -58,7 +64,10 @@ public class UserController {
             for (User myUser: userRepository.findAll()) {
                  if(myUser.getUserId().equalsIgnoreCase(user.getUserId().trim())){
                      if(myUser.getUserPassword().equals(user.getUserPassword())){
-                         bResult = true;
+                         if(myUser.getEmployee() == true)
+                             bResult = 1;
+                         else
+                             bResult = 2;
                          break;
                      }
                  }
@@ -79,6 +88,12 @@ public class UserController {
        // user.setId(Helper.generateId(user.getUserId()));
         return userRepository.save(user);
     }
+
+    @PostMapping("/users/employee/save")
+    public  User createEmployee(@Valid @RequestBody User user){
+        user.setEmployee(true);
+        return userRepository.save(user);
+    }
     /**
      * Update user response entity.
      *
@@ -87,23 +102,25 @@ public class UserController {
      * @return the response entity
      * @throws ResourceNotFoundException the resource not found exception
      */
-    @PutMapping("/users/{id}")
-    public ResponseEntity<User> updateUser(
-            @PathVariable(value = "id") Long userId, @Valid @RequestBody User userDetails)
-            throws ResourceNotFoundException {
-        userId = Helper.generateId(userDetails.getUserId());
-        Long finalUserId = userId;
-        User user =
-                userRepository
-                        .findById(userId)
-                        .orElseThrow(() -> new ResourceNotFoundException("User not found on :: " + finalUserId));
-        user.setEmail(userDetails.getEmail());
-        user.setLastName(userDetails.getLastName());
-        user.setFirstName(userDetails.getFirstName());
-        user.setUpdatedAt(new Date());
-        final User updatedUser = userRepository.save(user);
-        return ResponseEntity.ok(updatedUser);
+    @PostMapping("/users/update")
+    public int updateUser(@Valid @RequestBody User userDetails) {
+        try {
+            for (User user : userRepository.findAll()) {
+                if (user.getUserId().equalsIgnoreCase(userDetails.getUserId())) {
+                    user.setEmail(userDetails.getEmail());
+                    user.setLastName(userDetails.getLastName());
+                    user.setFirstName(userDetails.getFirstName());
+                    user.setUpdatedAt(new Date());
+                    userRepository.save(user);
+                    break;
+                }
+            }
+            return 0;
+        } catch (Exception ex) {
+            return 1;
+        }
     }
+
     /**
      * Delete user map.
      *
@@ -122,6 +139,21 @@ public class UserController {
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
         return response;
+    }
+
+    public String getUserEmail(String userId){
+        String bResult="";
+        try {
+            for (User myUser: userRepository.findAll()) {
+                if(myUser.getUserId().equalsIgnoreCase(userId.trim())){
+                    bResult = myUser.getEmail();
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  bResult;
     }
 
 }

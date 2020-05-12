@@ -1,0 +1,19 @@
+<section class="payment-form dark">
+  <div class="container">
+    <div class="text-center">
+      <h2>ORDER SUMMARY</h2>
+      <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo.</p> -->
+    </div>
+      <div class="products">
+        <h3 class="title">ORDER SUMMARY # {{this.order.order_id}}</h3>
+
+        <div class="item" *ngFor="let cart of this.carts">
+          <span class="price">{{cart.itemPrice * cart.itemQty}}</span>
+          <p class="item-name">{{cart.item}}</p>
+          <!--<p class="item-description">Lorem ipsum dolor sit amet</p> -->
+        </div>
+        <div class="total">Tax<span class="price">{{this.getTax()}}</span></div>
+        <div class="total">Total<span class="price">{{this.totalCost()}}</span></div>
+      </div>
+  </div>
+</section>
